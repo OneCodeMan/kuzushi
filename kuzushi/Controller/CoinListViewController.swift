@@ -20,6 +20,7 @@ class CoinListViewController: UIViewController {
         
         let view = UIView()
         view.backgroundColor = .white
+        view.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 30)
@@ -55,13 +56,13 @@ class CoinListViewController: UIViewController {
         headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         headerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        headerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.11).isActive = true
         
         view.addSubview(searchBarView)
         searchBarView.translatesAutoresizingMaskIntoConstraints = false
         searchBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         searchBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         searchBarView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0).isActive = true
+        
         
         
 //        view.addSubview(coinListTableView)
