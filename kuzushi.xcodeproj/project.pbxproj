@@ -8,21 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		16CCC3EF204E069F0027A49E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC3EE204E069F0027A49E /* AppDelegate.swift */; };
-		16CCC3F1204E069F0027A49E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC3F0204E069F0027A49E /* ViewController.swift */; };
+		16CCC3F1204E069F0027A49E /* CoinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC3F0204E069F0027A49E /* CoinListViewController.swift */; };
 		16CCC3F4204E069F0027A49E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16CCC3F2204E069F0027A49E /* Main.storyboard */; };
 		16CCC3F6204E069F0027A49E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16CCC3F5204E069F0027A49E /* Assets.xcassets */; };
 		16CCC3F9204E069F0027A49E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16CCC3F7204E069F0027A49E /* LaunchScreen.storyboard */; };
+		16CCC405204E0B0A0027A49E /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC404204E0B0A0027A49E /* Coin.swift */; };
 		81ECE7FC10315910B4619C12 /* Pods_kuzushi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84904B77D1154DF428F998AE /* Pods_kuzushi.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		16CCC3EB204E069F0027A49E /* kuzushi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kuzushi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16CCC3EE204E069F0027A49E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		16CCC3F0204E069F0027A49E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		16CCC3F0204E069F0027A49E /* CoinListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListViewController.swift; sourceTree = "<group>"; };
 		16CCC3F3204E069F0027A49E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		16CCC3F5204E069F0027A49E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		16CCC3F8204E069F0027A49E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		16CCC3FA204E069F0027A49E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16CCC404204E0B0A0027A49E /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		84904B77D1154DF428F998AE /* Pods_kuzushi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kuzushi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B08894654521EBD3B9F0E069 /* Pods-kuzushi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kuzushi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-kuzushi/Pods-kuzushi.debug.xcconfig"; sourceTree = "<group>"; };
 		B2DEBB0A891D662F54A65291 /* Pods-kuzushi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kuzushi.release.xcconfig"; path = "Pods/Target Support Files/Pods-kuzushi/Pods-kuzushi.release.xcconfig"; sourceTree = "<group>"; };
@@ -61,14 +63,39 @@
 		16CCC3ED204E069F0027A49E /* kuzushi */ = {
 			isa = PBXGroup;
 			children = (
+				16CCC403204E0AB80027A49E /* Controller */,
+				16CCC402204E0AB50027A49E /* View */,
+				16CCC401204E0AB10027A49E /* Model */,
 				16CCC3EE204E069F0027A49E /* AppDelegate.swift */,
-				16CCC3F0204E069F0027A49E /* ViewController.swift */,
 				16CCC3F2204E069F0027A49E /* Main.storyboard */,
 				16CCC3F5204E069F0027A49E /* Assets.xcassets */,
 				16CCC3F7204E069F0027A49E /* LaunchScreen.storyboard */,
 				16CCC3FA204E069F0027A49E /* Info.plist */,
 			);
 			path = kuzushi;
+			sourceTree = "<group>";
+		};
+		16CCC401204E0AB10027A49E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				16CCC404204E0B0A0027A49E /* Coin.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		16CCC402204E0AB50027A49E /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		16CCC403204E0AB80027A49E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				16CCC3F0204E069F0027A49E /* CoinListViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		82314A9FB27AC5DCD4A44B6C /* Pods */ = {
@@ -226,7 +253,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16CCC3F1204E069F0027A49E /* ViewController.swift in Sources */,
+				16CCC405204E0B0A0027A49E /* Coin.swift in Sources */,
+				16CCC3F1204E069F0027A49E /* CoinListViewController.swift in Sources */,
 				16CCC3EF204E069F0027A49E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

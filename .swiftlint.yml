@@ -12,7 +12,6 @@ opt_in_rules: # rules disabled by default that i want enabled
   - closure_spacing
   - closure_end_indentation
   - empty_count
-  - implicitly_unwrapped_optional
   - operator_usage_whitespace
   - redundant_nil_coalescing
 
