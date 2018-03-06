@@ -17,8 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
+        let rootViewController = CoinListViewController()
         
-        window?.rootViewController = UINavigationController(rootViewController: CoinListViewController())
+        window?.rootViewController = rootViewController
         
         return true
     }

@@ -14,20 +14,22 @@ class CoinListViewController: UIViewController {
     private var favoritesListTableView: UITableView!
     private var coinListTableView = UITableView()
     
-    private let headerLabel: UIView = {
+    private let headerView: UIView = {
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
+        
+        let view = UIView()
         
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 21))
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 22)
         label.textAlignment = .center
-        label.text = "Test Label"
         label.textColor = .blue
         label.numberOfLines = 1
+        view.addSubview(label)
         
-        return label
+        return view
     }()
     
     private let searchBarView: UISearchBar = {
@@ -39,19 +41,17 @@ class CoinListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Coin List"
-        
         let screenSize = UIScreen.main.bounds
         let screenWidth = screenSize.width
         let screenHeight = screenSize.height
         
-        self.view.addSubview(headerLabel)
+        view.addSubview(headerView)
         
         coinListTableView.frame = CGRect(x: 0, y: 150, width: screenWidth, height: screenHeight)
         coinListTableView.delegate = self
         coinListTableView.dataSource = self
         coinListTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CoinCell")
-        self.view.addSubview(coinListTableView)
+        view.addSubview(coinListTableView)
         
         
 //        coinSearchBar.delegate = self
