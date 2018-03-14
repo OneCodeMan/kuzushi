@@ -7,16 +7,13 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 class CoinListViewController: UIViewController {
     
     private var favoritesListTableView: UITableView!
-    private var coinListTableView = UITableView()
     
-    private let headerView: UIView = {
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
+    func buildHeaderView(withText text: String) -> UIView {
         
         let view = UIView()
         view.backgroundColor = .white
@@ -26,54 +23,66 @@ class CoinListViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 30)
         label.textAlignment = .left
         label.textColor = .black
-        label.text = "Search"
-        label.numberOfLines = 1
+        label.text = text
         
         view.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 5).isActive = true
         label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 5).isActive = true
         
         return view
-    }()
+    }
     
-    private let searchBarView: UISearchBar = {
+    private var searchBarView: UISearchBar = {
        let searchBar = UISearchBar()
        searchBar.placeholder = "Find a coin.."
-    
+       searchBar.backgroundColor = UIColor.flatForestGreen()
        return searchBar
+    }()
+    
+    private var coinListTableView: UITableView = {
+        var tableView = UITableView()
+        
+        return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let screenSize = UIScreen.main.bounds
-        let screenWidth = screenSize.width
-        let screenHeight = screenSize.height
-        
-        view.addSubview(headerView)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        headerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        let searchHeaderView = buildHeaderView(withText: "Search")
+        view.addSubview(searchHeaderView)
+        searchHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        searchHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        searchHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        searchHeaderView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         
         view.addSubview(searchBarView)
         searchBarView.translatesAutoresizingMaskIntoConstraints = false
         searchBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         searchBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        searchBarView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 0).isActive = true
+        searchBarView.topAnchor.constraint(equalTo: searchHeaderView.bottomAnchor, constant: 0).isActive = true
         
+        searchBarView.delegate = self
         
+        let coinsListHeaderView = buildHeaderView(withText: "Coins")
+        view.addSubview(coinsListHeaderView)
+        coinsListHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        coinsListHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        coinsListHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        coinsListHeaderView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 0).isActive = true
         
-//        view.addSubview(coinListTableView)
-//        coinListTableView.frame = CGRect(x: 0, y: 150, width: screenWidth, height: screenHeight)
+        view.addSubview(coinListTableView)
+        coinListTableView.translatesAutoresizingMaskIntoConstraints = false
+        coinListTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        coinListTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        coinListTableView.topAnchor.constraint(equalTo: coinsListHeaderView.bottomAnchor).isActive = true
+        coinListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
         coinListTableView.delegate = self
         coinListTableView.dataSource = self
-        coinListTableView.register(UITableViewCell.self, forCellReuseIdentifier: "CoinCell")
-        
-//        coinSearchBar.delegate = self
-//        favoritesListTableView.delegate = self
-//        favoritesListTableView.dataSource = self
+        coinListTableView.register(CoinCell.self, forCellReuseIdentifier: "CoinCell")
+
     }
 }
 
