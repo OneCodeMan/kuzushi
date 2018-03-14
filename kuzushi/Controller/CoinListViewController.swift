@@ -50,6 +50,11 @@ class CoinListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupLayout()
+
+    }
+    
+    private func setupLayout() {
         let searchHeaderView = buildHeaderView(withText: "Search")
         view.addSubview(searchHeaderView)
         searchHeaderView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +87,6 @@ class CoinListViewController: UIViewController {
         coinListTableView.delegate = self
         coinListTableView.dataSource = self
         coinListTableView.register(CoinCell.self, forCellReuseIdentifier: "CoinCell")
-
     }
 }
 
@@ -101,8 +105,8 @@ extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CoinCell", for: indexPath as IndexPath)
-        cell.textLabel?.text = "Test"
+        let cell = CoinCell(style: UITableViewCellStyle.default, reuseIdentifier: "CoinCell")
+        cell.coinName.text = "POOOO"
         return cell
     }
 }

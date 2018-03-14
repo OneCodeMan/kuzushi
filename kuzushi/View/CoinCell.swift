@@ -9,10 +9,24 @@
 import UIKit
 
 class CoinCell: UITableViewCell {
-
+    
+    let coinName = UILabel()
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        coinName.translatesAutoresizingMaskIntoConstraints = false
+        coinName.frame = CGRect(x: 10, y: 10, width: 100, height: 90)
+        contentView.addSubview(coinName)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		16688D83204F5B19006523D8 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16688D82204F5B19006523D8 /* CoinCell.swift */; };
-		16C9B3C4204F19B6006F6C9D /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C9B3C3204F19B6006F6C9D /* HeaderView.swift */; };
 		16CCC3EF204E069F0027A49E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC3EE204E069F0027A49E /* AppDelegate.swift */; };
 		16CCC3F1204E069F0027A49E /* CoinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC3F0204E069F0027A49E /* CoinListViewController.swift */; };
 		16CCC3F4204E069F0027A49E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16CCC3F2204E069F0027A49E /* Main.storyboard */; };
@@ -20,7 +19,6 @@
 
 /* Begin PBXFileReference section */
 		16688D82204F5B19006523D8 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoinCell.swift; path = kuzushi/View/CoinCell.swift; sourceTree = SOURCE_ROOT; };
-		16C9B3C3204F19B6006F6C9D /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		16CCC3EB204E069F0027A49E /* kuzushi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kuzushi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16CCC3EE204E069F0027A49E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		16CCC3F0204E069F0027A49E /* CoinListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListViewController.swift; sourceTree = "<group>"; };
@@ -91,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				16688D82204F5B19006523D8 /* CoinCell.swift */,
-				16C9B3C3204F19B6006F6C9D /* HeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -263,7 +260,6 @@
 				16688D83204F5B19006523D8 /* CoinCell.swift in Sources */,
 				16CCC3F1204E069F0027A49E /* CoinListViewController.swift in Sources */,
 				16CCC3EF204E069F0027A49E /* AppDelegate.swift in Sources */,
-				16C9B3C4204F19B6006F6C9D /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
