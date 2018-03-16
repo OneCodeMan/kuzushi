@@ -14,6 +14,7 @@ class CoinListViewController: UIViewController {
     var coins = [Coin]()
     var filteredCoins = [Coin]()
     var inSearchMode = false
+    let coinFetcher = CoinFetcher()
     
     func buildHeaderView(withText text: String, ofSize size: CGFloat) -> UIView {
         
@@ -57,6 +58,11 @@ class CoinListViewController: UIViewController {
                  Coin(rank: 100, name: "Test Test", symbol: "ETH", priceUSD: 223232.23, hourlyPercentChange: 2.2323)]
         
         setupLayout()
+        
+        coinFetcher.getCoins {
+            self.coins = self.coinFetcher.coins
+            self.coinListTableView.reloadData()
+        }
 
     }
     
