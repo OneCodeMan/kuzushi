@@ -53,7 +53,8 @@ class CoinListViewController: UIViewController {
         
         coins = [Coin(rank: 1, name: "Bitcoin", symbol: "BTC", priceUSD: 8562.75, dailyPercentChange: 0.76),
                  Coin(rank: 81, name: "Smart Cash", symbol: "SMART", priceUSD: 0.181687, dailyPercentChange: 0.95),
-                 Coin(rank: 65, name: "Basic Attention Token", symbol: "BAT", priceUSD: 0.200013, dailyPercentChange: -1.09)]
+                 Coin(rank: 65, name: "Basic Attention Token", symbol: "BAT", priceUSD: 0.200013, dailyPercentChange: -1.09),
+                 Coin(rank: 100, name: "Test Test", symbol: "ETH", priceUSD: 223232.23, dailyPercentChange: 2.2323)]
         
         setupLayout()
 
