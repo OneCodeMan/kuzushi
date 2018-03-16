@@ -14,6 +14,7 @@
 		16CCC3F6204E069F0027A49E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16CCC3F5204E069F0027A49E /* Assets.xcassets */; };
 		16CCC3F9204E069F0027A49E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16CCC3F7204E069F0027A49E /* LaunchScreen.storyboard */; };
 		16CCC405204E0B0A0027A49E /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC404204E0B0A0027A49E /* Coin.swift */; };
+		16EFF0F2205C509B00CFA32A /* CoinFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EFF0F1205C509B00CFA32A /* CoinFetcher.swift */; };
 		81ECE7FC10315910B4619C12 /* Pods_kuzushi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84904B77D1154DF428F998AE /* Pods_kuzushi.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		16CCC3F8204E069F0027A49E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		16CCC3FA204E069F0027A49E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16CCC404204E0B0A0027A49E /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
+		16EFF0F1205C509B00CFA32A /* CoinFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinFetcher.swift; sourceTree = "<group>"; };
 		84904B77D1154DF428F998AE /* Pods_kuzushi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kuzushi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B08894654521EBD3B9F0E069 /* Pods-kuzushi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kuzushi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-kuzushi/Pods-kuzushi.debug.xcconfig"; sourceTree = "<group>"; };
 		B2DEBB0A891D662F54A65291 /* Pods-kuzushi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kuzushi.release.xcconfig"; path = "Pods/Target Support Files/Pods-kuzushi/Pods-kuzushi.release.xcconfig"; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				16CCC404204E0B0A0027A49E /* Coin.swift */,
+				16EFF0F1205C509B00CFA32A /* CoinFetcher.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				16CCC405204E0B0A0027A49E /* Coin.swift in Sources */,
 				16688D83204F5B19006523D8 /* CoinCell.swift in Sources */,
 				16CCC3F1204E069F0027A49E /* CoinListViewController.swift in Sources */,
+				16EFF0F2205C509B00CFA32A /* CoinFetcher.swift in Sources */,
 				16CCC3EF204E069F0027A49E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
