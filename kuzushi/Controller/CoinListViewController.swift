@@ -11,8 +11,9 @@ import ChameleonFramework
 
 class CoinListViewController: UIViewController {
     
-    private var favoritesListTableView: UITableView!
     var coins = [Coin]()
+    var filteredCoins = [Coin]()
+    var inSearchMode = false
     
     func buildHeaderView(withText text: String, ofSize size: CGFloat) -> UIView {
         
@@ -50,10 +51,10 @@ class CoinListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        coins = [Coin(rank: 1, name: "Bitcoin", symbol: "BTC", priceUSD: 8562.75, dailyPercentChange: 0.76),
-                 Coin(rank: 81, name: "Smart Cash", symbol: "SMART", priceUSD: 0.181687, dailyPercentChange: 0.95),
-                 Coin(rank: 65, name: "Basic Attention Token", symbol: "BAT", priceUSD: 0.200013, dailyPercentChange: -1.09),
-                 Coin(rank: 100, name: "Test Test", symbol: "ETH", priceUSD: 223232.23, dailyPercentChange: 2.2323)]
+        coins = [Coin(rank: 1, name: "Bitcoin", symbol: "BTC", priceUSD: 8562.75, hourlyPercentChange: 0.76),
+                 Coin(rank: 81, name: "Smart Cash", symbol: "SMART", priceUSD: 0.181687, hourlyPercentChange: 0.95),
+                 Coin(rank: 65, name: "Basic Attention Token", symbol: "BAT", priceUSD: 0.200013, hourlyPercentChange: -1.09),
+                 Coin(rank: 100, name: "Test Test", symbol: "ETH", priceUSD: 223232.23, hourlyPercentChange: 2.2323)]
         
         setupLayout()
 
@@ -98,25 +99,78 @@ class CoinListViewController: UIViewController {
 
 extension CoinListViewController: UISearchBarDelegate {
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchBar.text == nil || searchBar.text == "" {
+            
+            inSearchMode = false
+            coinListTableView.reloadData()
+            view.endEditing(true)
+            
+        } else {
+            inSearchMode = true
+            
+            let lower = searchBar.text!.lowercased()
+            
+            filteredCoins = coins.filter({ $0.name!.lowercased().range(of: lower) != nil || ($0.symbol!.lowercased().range(of: lower) != nil) })
+            coinListTableView.reloadData()
+            
+        }
+    }
 }
 
 extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Selected row")
+       
+        var coin: Coin!
+        
+        if inSearchMode {
+            coin = filteredCoins[indexPath.row]
+        } else {
+            coin = coins[indexPath.row]
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if inSearchMode {
+            return filteredCoins.count
+        }
+        
         return coins.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CoinCell(style: UITableViewCellStyle.default, reuseIdentifier: "CoinCell")
-        cell.rank.text = "\(coins[indexPath.row].rank!)"
-        cell.symbol.text = coins[indexPath.row].symbol!
-        cell.name.text = coins[indexPath.row].name!
-        cell.priceUSD.text =  "$\(coins[indexPath.row].priceUSD!)"
-        cell.hourlyPercentChange.text = "\(coins[indexPath.row].dailyPercentChange!)%"
+        
+        let coin: Coin!
+        
+        if inSearchMode {
+            
+            coin = filteredCoins[indexPath.row]
+            
+        } else {
+            
+            coin = coins[indexPath.row]
+        }
+        
+        let isNegative = "\(coin.hourlyPercentChange!)".starts(with: "-")
+        let hourlyPercentageText = isNegative ?
+                                    "\(coin.hourlyPercentChange!)" :
+                                    "+\(coin.hourlyPercentChange!)"
+        
+        cell.rank.text = "\(coin.rank!)"
+        cell.symbol.text = coin.symbol!
+        cell.name.text = coin.name!
+        cell.priceUSD.text =  "$\(coin.priceUSD!)"
+        cell.hourlyPercentChange.text = "\(hourlyPercentageText)%"
+        cell.hourlyPercentChange.textColor = isNegative ? UIColor.red : UIColor.green
         return cell
     }
 }
