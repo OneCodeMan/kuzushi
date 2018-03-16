@@ -166,17 +166,23 @@ extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
             coin = coins[indexPath.row]
         }
         
-        let isNegative = "\(coin.hourlyPercentChange!)".starts(with: "-")
-        let hourlyPercentageText = isNegative ?
-                                    "\(coin.hourlyPercentChange!)" :
-                                    "+\(coin.hourlyPercentChange!)"
+        var hourlyPercentageText: String!
         
-        cell.rank.text = "\(coin.rank!)"
+        if let rawHourlyPercentageText = coin.hourlyPercentChange {
+            let isNegative = "\(coin.hourlyPercentChange!)".starts(with: "-")
+            hourlyPercentageText = isNegative ?
+                "\(coin.hourlyPercentChange!)" :
+            "+\(coin.hourlyPercentChange!)"
+        } else {
+            hourlyPercentageText = "+3333.3"
+        }
+        
+        cell.rank.text = "\(coin.rank)" ?? ""
         cell.symbol.text = coin.symbol!
         cell.name.text = coin.name!
-        cell.priceUSD.text =  "$\(coin.priceUSD!)"
+        cell.priceUSD.text =  "$\(coin.priceUSD)" ?? ""
         cell.hourlyPercentChange.text = "\(hourlyPercentageText)%"
-        cell.hourlyPercentChange.textColor = isNegative ? UIColor.red : UIColor.green
+        //cell.hourlyPercentChange.textColor = isNegative ? UIColor.red : UIColor.green
         return cell
     }
 }
