@@ -14,14 +14,14 @@ class CoinListViewController: UIViewController {
     private var favoritesListTableView: UITableView!
     var coins = [Coin]()
     
-    func buildHeaderView(withText text: String) -> UIView {
+    func buildHeaderView(withText text: String, ofSize size: CGFloat) -> UIView {
         
         let view = UIView()
         view.backgroundColor = .white
-        view.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.font = UIFont.systemFont(ofSize: size)
         label.textAlignment = .left
         label.textColor = .black
         label.text = text
@@ -38,7 +38,6 @@ class CoinListViewController: UIViewController {
     private var searchBarView: UISearchBar = {
        let searchBar = UISearchBar()
        searchBar.placeholder = "Find a coin.."
-       searchBar.backgroundColor = UIColor.flatForestGreen()
        return searchBar
     }()
     
@@ -61,7 +60,7 @@ class CoinListViewController: UIViewController {
     }
     
     private func setupLayout() {
-        let searchHeaderView = buildHeaderView(withText: "Search")
+        let searchHeaderView = buildHeaderView(withText: "Search", ofSize: 20)
         view.addSubview(searchHeaderView)
         searchHeaderView.translatesAutoresizingMaskIntoConstraints = false
         searchHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -76,7 +75,7 @@ class CoinListViewController: UIViewController {
         
         searchBarView.delegate = self
         
-        let coinsListHeaderView = buildHeaderView(withText: "Coins")
+        let coinsListHeaderView = buildHeaderView(withText: "Coins", ofSize: 25)
         view.addSubview(coinsListHeaderView)
         coinsListHeaderView.translatesAutoresizingMaskIntoConstraints = false
         coinsListHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -116,8 +115,8 @@ extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.rank.text = "\(coins[indexPath.row].rank!)"
         cell.symbol.text = coins[indexPath.row].symbol!
         cell.name.text = coins[indexPath.row].name!
-        cell.priceUSD.text =  "\(coins[indexPath.row].priceUSD!)"
-        cell.hourlyPercentChange.text = "\(coins[indexPath.row].dailyPercentChange!)"
+        cell.priceUSD.text =  "$\(coins[indexPath.row].priceUSD!)"
+        cell.hourlyPercentChange.text = "\(coins[indexPath.row].dailyPercentChange!)%"
         return cell
     }
 }
