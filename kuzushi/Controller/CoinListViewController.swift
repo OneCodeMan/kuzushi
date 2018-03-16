@@ -12,6 +12,7 @@ import ChameleonFramework
 class CoinListViewController: UIViewController {
     
     private var favoritesListTableView: UITableView!
+    var coins = [Coin]()
     
     func buildHeaderView(withText text: String) -> UIView {
         
@@ -50,6 +51,10 @@ class CoinListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        coins = [Coin(rank: 1, name: "Bitcoin", symbol: "BTC", priceUSD: 8562.75, dailyPercentChange: 0.76),
+                 Coin(rank: 81, name: "Smart Cash", symbol: "SMART", priceUSD: 0.181687, dailyPercentChange: 0.95),
+                 Coin(rank: 65, name: "Basic Attention Token", symbol: "BAT", priceUSD: 0.200013, dailyPercentChange: -1.09)]
+        
         setupLayout()
 
     }
@@ -83,6 +88,7 @@ class CoinListViewController: UIViewController {
         coinListTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         coinListTableView.topAnchor.constraint(equalTo: coinsListHeaderView.bottomAnchor).isActive = true
         coinListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        coinListTableView.rowHeight = 90
         
         coinListTableView.delegate = self
         coinListTableView.dataSource = self
@@ -101,12 +107,16 @@ extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return coins.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = CoinCell(style: UITableViewCellStyle.default, reuseIdentifier: "CoinCell")
-        cell.coinName.text = "POOOO"
+        cell.rank.text = "\(coins[indexPath.row].rank!)"
+        cell.symbol.text = coins[indexPath.row].symbol!
+        cell.name.text = coins[indexPath.row].name!
+        cell.priceUSD.text =  "\(coins[indexPath.row].priceUSD!)"
+        cell.hourlyPercentChange.text = "\(coins[indexPath.row].dailyPercentChange!)"
         return cell
     }
 }
