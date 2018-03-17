@@ -63,6 +63,24 @@ class CoinListViewController: UIViewController {
         return tableView
     }()
     
+    private var noResultsView: UIView = {
+        var view = UIView()
+        
+        let label = UILabel()
+        label.font = UIFont(name: Avenir.medium.rawValue, size: 15)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.text = "No results found 😜"
+        
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
+        
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -115,6 +133,14 @@ class CoinListViewController: UIViewController {
         } else {
             coinListTableView.addSubview(coinListRefreshControl)
         }
+        
+        view.addSubview(noResultsView)
+        noResultsView.translatesAutoresizingMaskIntoConstraints = false
+        noResultsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        noResultsView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        noResultsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        noResultsView.topAnchor.constraint(equalTo: coinsListHeaderView.bottomAnchor).isActive = true
+        noResultsView.isHidden = true
     }
 }
 
@@ -140,9 +166,9 @@ extension CoinListViewController: UISearchBarDelegate {
                 
                 filteredCoins = coins.filter({ $0.name?.lowercased().range(of: lower) != nil || ($0.symbol?.lowercased().range(of: lower) != nil) })
                 
+                coinListTableView.reloadData()
+                
             }
-
-            coinListTableView.reloadData()
             
         }
     }
