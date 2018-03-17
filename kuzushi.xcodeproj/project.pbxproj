@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		16688D83204F5B19006523D8 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16688D82204F5B19006523D8 /* CoinCell.swift */; };
+		166F08B2205DAC4E00C35F31 /* Avenir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166F08B1205DAC4E00C35F31 /* Avenir.swift */; };
 		16CCC3EF204E069F0027A49E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC3EE204E069F0027A49E /* AppDelegate.swift */; };
 		16CCC3F1204E069F0027A49E /* CoinListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC3F0204E069F0027A49E /* CoinListViewController.swift */; };
 		16CCC3F4204E069F0027A49E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16CCC3F2204E069F0027A49E /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		16688D82204F5B19006523D8 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoinCell.swift; path = kuzushi/View/CoinCell.swift; sourceTree = SOURCE_ROOT; };
+		166F08B1205DAC4E00C35F31 /* Avenir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Avenir.swift; sourceTree = "<group>"; };
 		16CCC3EB204E069F0027A49E /* kuzushi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kuzushi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		16CCC3EE204E069F0027A49E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		16CCC3F0204E069F0027A49E /* CoinListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			children = (
 				16CCC404204E0B0A0027A49E /* Coin.swift */,
 				16EFF0F1205C509B00CFA32A /* CoinFetcher.swift */,
+				166F08B1205DAC4E00C35F31 /* Avenir.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			files = (
 				16CCC405204E0B0A0027A49E /* Coin.swift in Sources */,
 				16688D83204F5B19006523D8 /* CoinCell.swift in Sources */,
+				166F08B2205DAC4E00C35F31 /* Avenir.swift in Sources */,
 				16CCC3F1204E069F0027A49E /* CoinListViewController.swift in Sources */,
 				16EFF0F2205C509B00CFA32A /* CoinFetcher.swift in Sources */,
 				16CCC3EF204E069F0027A49E /* AppDelegate.swift in Sources */,

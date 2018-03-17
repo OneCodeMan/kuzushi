@@ -23,7 +23,7 @@ class CoinListViewController: UIViewController {
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: size)
+        label.font = UIFont(name: Avenir.heavy.rawValue, size: size)
         label.textAlignment = .left
         label.textColor = .black
         label.text = text
@@ -43,6 +43,20 @@ class CoinListViewController: UIViewController {
        return searchBar
     }()
     
+    private var coinListRefreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        
+        return refreshControl
+    }()
+    
+    @objc func refreshData() {
+        coinFetcher.getCoins {
+            self.coins = self.coinFetcher.coins
+            self.coinListRefreshControl.endRefreshing()
+            self.coinListTableView.reloadData()
+        }
+    }
+    
     private var coinListTableView: UITableView = {
         var tableView = UITableView()
         
@@ -54,16 +68,15 @@ class CoinListViewController: UIViewController {
         
         setupLayout()
         
-        coinFetcher.getCoins {
-            self.coins = self.coinFetcher.coins
-            print(self.coins)
-            self.coinListTableView.reloadData()
-        }
+        refreshData()
 
     }
     
     private func setupLayout() {
-        let searchHeaderView = buildHeaderView(withText: "Search", ofSize: 20)
+        
+        let titleTextSize: CGFloat = 25
+        
+        let searchHeaderView = buildHeaderView(withText: "Search", ofSize: titleTextSize)
         view.addSubview(searchHeaderView)
         searchHeaderView.translatesAutoresizingMaskIntoConstraints = false
         searchHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -78,7 +91,7 @@ class CoinListViewController: UIViewController {
         
         searchBarView.delegate = self
         
-        let coinsListHeaderView = buildHeaderView(withText: "Coins", ofSize: 25)
+        let coinsListHeaderView = buildHeaderView(withText: "Coins", ofSize: titleTextSize)
         view.addSubview(coinsListHeaderView)
         coinsListHeaderView.translatesAutoresizingMaskIntoConstraints = false
         coinsListHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -96,6 +109,12 @@ class CoinListViewController: UIViewController {
         coinListTableView.delegate = self
         coinListTableView.dataSource = self
         coinListTableView.register(CoinCell.self, forCellReuseIdentifier: "CoinCell")
+        coinListRefreshControl.addTarget(self, action: #selector(CoinListViewController.refreshData), for: .valueChanged)
+        if #available(iOS 10.0, *) {
+            coinListTableView.refreshControl = coinListRefreshControl
+        } else {
+            coinListTableView.addSubview(coinListRefreshControl)
+        }
     }
 }
 

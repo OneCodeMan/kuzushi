@@ -13,11 +13,12 @@ import SwiftyJSON
 class CoinFetcher {
     
     var coins = [Coin]()
-    
     var coinURL: URL?
     let URLstring = "https://api.coinmarketcap.com/v1/ticker/"
     
     func getCoins(completed: @escaping () -> Void) {
+        
+        coins = []
         
         coinURL = URL(string: URLstring)
         

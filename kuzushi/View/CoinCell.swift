@@ -25,7 +25,7 @@ class CoinCell: UITableViewCell {
     private func setupLayout() {
         
         contentView.addSubview(rank)
-        rank.font = UIFont.systemFont(ofSize: 50)
+        rank.font = UIFont(name: Avenir.medium.rawValue, size: 50)
         rank.numberOfLines = 1
         rank.textAlignment = .center
         rank.adjustsFontSizeToFitWidth = true
@@ -36,7 +36,7 @@ class CoinCell: UITableViewCell {
         rank.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 0).isActive = true
         
         contentView.addSubview(symbol)
-        symbol.font = UIFont.boldSystemFont(ofSize: 40)
+        symbol.font = UIFont(name: Avenir.heavy.rawValue, size: 40)
         symbol.translatesAutoresizingMaskIntoConstraints = false
         symbol.adjustsFontSizeToFitWidth = true
         symbol.leadingAnchor.constraint(equalTo: rank.trailingAnchor, constant: 15).isActive = true
@@ -44,7 +44,7 @@ class CoinCell: UITableViewCell {
         symbol.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.40).isActive = true
         
         contentView.addSubview(name)
-        name.font = UIFont.italicSystemFont(ofSize: 15)
+        name.font = UIFont(name: Avenir.lightOblique.rawValue, size: 15)
         name.translatesAutoresizingMaskIntoConstraints = false
         name.adjustsFontSizeToFitWidth = true
         name.leadingAnchor.constraint(equalTo: rank.trailingAnchor, constant: 15).isActive = true
@@ -53,7 +53,7 @@ class CoinCell: UITableViewCell {
         name.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.37).isActive = true
         
         contentView.addSubview(priceUSD)
-        priceUSD.font = UIFont.systemFont(ofSize: 18)
+        priceUSD.font = UIFont(name: Avenir.normal.rawValue, size: 18)
         priceUSD.translatesAutoresizingMaskIntoConstraints = false
         priceUSD.adjustsFontSizeToFitWidth = true
         priceUSD.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
@@ -61,6 +61,7 @@ class CoinCell: UITableViewCell {
         priceUSD.leadingAnchor.constraint(greaterThanOrEqualTo: name.trailingAnchor).isActive = true
         
         contentView.addSubview(hourlyPercentChange)
+        hourlyPercentChange.font = UIFont(name: Avenir.normal.rawValue, size: 18)
         hourlyPercentChange.translatesAutoresizingMaskIntoConstraints = false
         hourlyPercentChange.adjustsFontSizeToFitWidth = true
         hourlyPercentChange.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
