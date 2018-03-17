@@ -52,15 +52,11 @@ class CoinListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        coins = [Coin(rank: 1, name: "Bitcoin", symbol: "BTC", priceUSD: 8562.75, hourlyPercentChange: 0.76),
-                 Coin(rank: 81, name: "Smart Cash", symbol: "SMART", priceUSD: 0.181687, hourlyPercentChange: 0.95),
-                 Coin(rank: 65, name: "Basic Attention Token", symbol: "BAT", priceUSD: 0.200013, hourlyPercentChange: -1.09),
-                 Coin(rank: 100, name: "Test Test", symbol: "ETH", priceUSD: 223232.23, hourlyPercentChange: 2.2323)]
-        
         setupLayout()
         
         coinFetcher.getCoins {
             self.coins = self.coinFetcher.coins
+            print(self.coins)
             self.coinListTableView.reloadData()
         }
 
@@ -120,9 +116,13 @@ extension CoinListViewController: UISearchBarDelegate {
         } else {
             inSearchMode = true
             
-            let lower = searchBar.text!.lowercased()
-            
-            filteredCoins = coins.filter({ $0.name!.lowercased().range(of: lower) != nil || ($0.symbol!.lowercased().range(of: lower) != nil) })
+            if let searchBarText = searchBar.text {
+                let lower = searchBarText.lowercased()
+                
+                filteredCoins = coins.filter({ $0.name?.lowercased().range(of: lower) != nil || ($0.symbol?.lowercased().range(of: lower) != nil) })
+                
+            }
+
             coinListTableView.reloadData()
             
         }
@@ -167,22 +167,24 @@ extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         var hourlyPercentageText: String!
+        var isNegative: Bool!
         
         if let rawHourlyPercentageText = coin.hourlyPercentChange {
-            let isNegative = "\(coin.hourlyPercentChange!)".starts(with: "-")
-            hourlyPercentageText = isNegative ?
-                "\(coin.hourlyPercentChange!)" :
-            "+\(coin.hourlyPercentChange!)"
+            isNegative = "\(rawHourlyPercentageText)".starts(with: "-")
+            
+            hourlyPercentageText = isNegative ? "\(rawHourlyPercentageText)%" :
+                                                "+\(rawHourlyPercentageText)%"
+            
         } else {
-            hourlyPercentageText = "+3333.3"
+            hourlyPercentageText = "0.00"
         }
         
-        cell.rank.text = "\(coin.rank)" ?? ""
-        cell.symbol.text = coin.symbol!
-        cell.name.text = coin.name!
-        cell.priceUSD.text =  "$\(coin.priceUSD)" ?? ""
-        cell.hourlyPercentChange.text = "\(hourlyPercentageText)%"
-        //cell.hourlyPercentChange.textColor = isNegative ? UIColor.red : UIColor.green
+        cell.rank.text = "\(coin.rank ?? 0)"
+        cell.symbol.text = coin.symbol ?? "N/A"
+        cell.name.text = coin.name ?? "N/A"
+        cell.priceUSD.text =  "$\(coin.priceUSD ?? 0)"
+        cell.hourlyPercentChange.text = hourlyPercentageText
+        cell.hourlyPercentChange.textColor = isNegative ? UIColor.red : UIColor.green
         return cell
     }
 }

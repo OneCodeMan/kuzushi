@@ -8,37 +8,41 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 class CoinFetcher {
     
     var coins = [Coin]()
     
-    let coinURL = URL(string: "https://api.coinmarketcap.com/v1/ticker/")!
+    var coinURL: URL?
+    let URLstring = "https://api.coinmarketcap.com/v1/ticker/"
     
     func getCoins(completed: @escaping () -> Void) {
         
-        Alamofire.request(coinURL).responseJSON(completionHandler: { response in
-            let result = response.result
-            
-            if let coinData = result.value! as? [[String:Any]] {
+        coinURL = URL(string: URLstring)
+        
+        if let coinURL = coinURL {
+            Alamofire.request(coinURL).responseJSON(completionHandler: { response in
+                let result = response.result
                 
-                for coin in coinData {
-                    let rank = coin["rank"]! as? Int
-                    let name = coin["name"]! as? String
-                    let symbol = coin["symbol"]! as? String
-                    let priceUSD = coin["price_usd"]! as? Double
-                    let hourlyPercentChange = coin["percent_change_24h"]! as? Double
+                let rawCoinData = result.value ?? ""
+                let coinData = JSON(rawCoinData)
+                
+                for (_, coin) in coinData {
+                    let rank = coin["rank"].intValue
+                    let name = coin["name"].stringValue
+                    let symbol = coin["symbol"].stringValue
+                    let priceUSD = coin["price_usd"].doubleValue
+                    let hourlyPercentChange = coin["percent_change_24h"].doubleValue
                     
                     let coinInstance = Coin(rank: rank, name: name, symbol: symbol, priceUSD: priceUSD, hourlyPercentChange: hourlyPercentChange)
                     
                     self.coins.append(coinInstance)
                 }
-            } else {
-                print("Coins not working")
-            }
-            
-            completed()
-        })
+                
+                completed()
+            })
+        }
     }
     
 }

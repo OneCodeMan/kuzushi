@@ -66,8 +66,6 @@ class CoinCell: UITableViewCell {
         hourlyPercentChange.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
         hourlyPercentChange.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
         
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
