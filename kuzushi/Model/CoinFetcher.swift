@@ -34,9 +34,10 @@ class CoinFetcher {
                     let name = coin["name"].stringValue
                     let symbol = coin["symbol"].stringValue
                     let priceUSD = coin["price_usd"].doubleValue
+                    let priceBTC = coin["price_btc"].doubleValue
                     let hourlyPercentChange = coin["percent_change_24h"].doubleValue
                     
-                    let coinInstance = Coin(rank: rank, name: name, symbol: symbol, priceUSD: priceUSD, hourlyPercentChange: hourlyPercentChange)
+                    let coinInstance = Coin(rank: rank, name: name, symbol: symbol, priceUSD: priceUSD, priceBTC: priceBTC, hourlyPercentChange: hourlyPercentChange)
                     
                     self.coins.append(coinInstance)
                 }
