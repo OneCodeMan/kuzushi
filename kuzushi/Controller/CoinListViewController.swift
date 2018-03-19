@@ -37,6 +37,45 @@ class CoinListViewController: UIViewController {
         return view
     }
     
+    func buildNoResultsView(withText text: String) -> UIView {
+        let view = UIView()
+        view.backgroundColor = .white
+    
+        let label = UILabel()
+        label.font = UIFont(name: Avenir.medium.rawValue, size: 15)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.text = text
+    
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
+        label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
+    
+        return view
+    }
+    
+    private var noConnectionView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        
+        let label = UILabel()
+        label.font = UIFont(name: Avenir.medium.rawValue, size: 15)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.text = "No internet connection. Please restart the app. 😔"
+        
+        view.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20).isActive = true
+        
+        return view
+    }()
+    
     private var searchBarView: UISearchBar = {
        let searchBar = UISearchBar()
        searchBar.placeholder = "Find a coin.."
@@ -52,8 +91,18 @@ class CoinListViewController: UIViewController {
     @objc func refreshData() {
         coinFetcher.getCoins {
             self.coins = self.coinFetcher.coins
-            self.coinListRefreshControl.endRefreshing()
-            self.coinListTableView.reloadData()
+            
+            if self.coins.isEmpty {
+                self.coinListTableView.isHidden = true
+                self.noConnectionView.isHidden = false
+                
+            } else {
+                self.coinListTableView.isHidden = false
+                self.noConnectionView.isHidden = true
+                self.coinListRefreshControl.endRefreshing()
+                self.coinListTableView.reloadData()
+            }
+
         }
     }
     
@@ -61,24 +110,6 @@ class CoinListViewController: UIViewController {
         var tableView = UITableView()
         
         return tableView
-    }()
-    
-    private var noResultsView: UIView = {
-        var view = UIView()
-        
-        let label = UILabel()
-        label.font = UIFont(name: Avenir.medium.rawValue, size: 15)
-        label.textAlignment = .center
-        label.textColor = .black
-        label.text = "No results found 😜"
-        
-        view.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
-        label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
-        
-        return view
     }()
     
     override func viewDidLoad() {
@@ -134,6 +165,7 @@ class CoinListViewController: UIViewController {
             coinListTableView.addSubview(coinListRefreshControl)
         }
         
+        let noResultsView = buildNoResultsView(withText: "No results found 😜")
         view.addSubview(noResultsView)
         noResultsView.translatesAutoresizingMaskIntoConstraints = false
         noResultsView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -141,6 +173,15 @@ class CoinListViewController: UIViewController {
         noResultsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         noResultsView.topAnchor.constraint(equalTo: coinsListHeaderView.bottomAnchor).isActive = true
         noResultsView.isHidden = true
+        
+        view.addSubview(noConnectionView)
+        noConnectionView.translatesAutoresizingMaskIntoConstraints = false
+        noConnectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        noConnectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        noConnectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        noConnectionView.topAnchor.constraint(equalTo: coinsListHeaderView.bottomAnchor).isActive = true
+        noConnectionView.isHidden = true
+        
     }
 }
 
@@ -229,7 +270,7 @@ extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.name.text = coin.name ?? "N/A"
         cell.priceUSD.text =  "$\(coin.priceUSD ?? 0)"
         cell.hourlyPercentChange.text = hourlyPercentageText
-        cell.hourlyPercentChange.textColor = isNegative ? UIColor.red : UIColor.green
+        cell.hourlyPercentChange.textColor = isNegative ? UIColor.red : UIColor.flatGreenColorDark()
         return cell
     }
 }
