@@ -88,7 +88,7 @@ class CoinListViewController: UIViewController {
         return refreshControl
     }()
     
-    @objc func refreshData() {
+    @objc fileprivate func refreshData() {
         coinFetcher.getCoins {
             self.coins = self.coinFetcher.coins
             
@@ -112,16 +112,50 @@ class CoinListViewController: UIViewController {
         return tableView
     }()
     
+    private var timeSegmentedControl: UISegmentedControl = {
+        var pct = UISegmentedControl()
+        pct.tintColor = UIColor.flatSkyBlue()
+        let font = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)]
+        pct.setTitleTextAttributes(font, for: .normal)
+        pct.addTarget(self, action: #selector(handleSegmentIndexChange), for: .valueChanged)
+        pct.insertSegment(withTitle: "Hourly", at: 0, animated: true)
+        pct.insertSegment(withTitle: "Daily", at: 1, animated: true)
+        pct.insertSegment(withTitle: "Weekly", at: 1, animated: true)
+        pct.selectedSegmentIndex = 0
+        return pct
+    }()
+    
+    private var priceSegmentedControl: UISegmentedControl = {
+        var sgc = UISegmentedControl()
+        let font = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17)]
+        sgc.setTitleTextAttributes(font, for: .normal)
+        sgc.tintColor = UIColor.flatSkyBlue()
+        sgc.addTarget(self, action: #selector(handleSegmentIndexChange), for: .valueChanged)
+        sgc.insertSegment(withTitle: "USD", at: 0, animated: true)
+        sgc.insertSegment(withTitle: "BTC", at: 1, animated: true)
+        sgc.selectedSegmentIndex = 0
+        return sgc
+    }()
+    
+    @objc fileprivate func handleSegmentIndexChange() {
+        print("price index: ", priceSegmentedControl.selectedSegmentIndex)
+        print("time index: ", timeSegmentedControl.selectedSegmentIndex)
+        coinListTableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupLayout()
-        
         refreshData()
 
     }
     
-    private func setupLayout() {
+    // MARK: - Setup Layout
+    
+    fileprivate func setupLayout() {
+        
+        view.backgroundColor = .white
         
         let titleTextSize: CGFloat = 25
         
@@ -130,7 +164,11 @@ class CoinListViewController: UIViewController {
         searchHeaderView.translatesAutoresizingMaskIntoConstraints = false
         searchHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         searchHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        searchHeaderView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        if #available(iOS 11.0, *) {
+            searchHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            searchHeaderView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        }
         
         view.addSubview(searchBarView)
         searchBarView.translatesAutoresizingMaskIntoConstraints = false
@@ -147,11 +185,25 @@ class CoinListViewController: UIViewController {
         coinsListHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         coinsListHeaderView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor, constant: 0).isActive = true
         
+        view.addSubview(timeSegmentedControl)
+        timeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        timeSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2).isActive = true
+        timeSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -2).isActive = true
+        timeSegmentedControl.topAnchor.constraint(equalTo: coinsListHeaderView.bottomAnchor).isActive = true
+        timeSegmentedControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        view.addSubview(priceSegmentedControl)
+        priceSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        priceSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2).isActive = true
+        priceSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -2).isActive = true
+        priceSegmentedControl.topAnchor.constraint(equalTo: timeSegmentedControl.bottomAnchor, constant: 1.5).isActive = true
+        priceSegmentedControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
         view.addSubview(coinListTableView)
         coinListTableView.translatesAutoresizingMaskIntoConstraints = false
         coinListTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         coinListTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        coinListTableView.topAnchor.constraint(equalTo: coinsListHeaderView.bottomAnchor).isActive = true
+        coinListTableView.topAnchor.constraint(equalTo: priceSegmentedControl.bottomAnchor).isActive = true
         coinListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         coinListTableView.rowHeight = 90
         
@@ -215,19 +267,21 @@ extension CoinListViewController: UISearchBarDelegate {
     }
 }
 
+// MARK:- UITableViewDelegate, 
+
 extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
-        var coin: Coin!
-        
-        if inSearchMode {
-            coin = filteredCoins[indexPath.row]
-        } else {
-            coin = coins[indexPath.row]
-        }
-        
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//       
+//        var coin: Coin!
+//        
+//        if inSearchMode {
+//            coin = filteredCoins[indexPath.row]
+//        } else {
+//            coin = coins[indexPath.row]
+//        }
+//        
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -252,25 +306,43 @@ extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
             coin = coins[indexPath.row]
         }
         
-        var hourlyPercentageText: String!
+        var percentChange: Double!
+        var percentageText: String!
         var isNegative: Bool!
         
-        if let rawHourlyPercentageText = coin.hourlyPercentChange {
-            isNegative = "\(rawHourlyPercentageText)".starts(with: "-")
+        switch timeSegmentedControl.selectedSegmentIndex {
+        case 0:
+            percentChange = coin.hourlyPercentChange
+            break
+        case 1:
+            percentChange = coin.dailyPercentChange
+            break
+        case 2:
+            percentChange = coin.weeklyPercentChange
+            break
+        default:
+            percentChange = coin.hourlyPercentChange
+            break
+        }
+
+        if let rawPercentageText = percentChange {
+            isNegative = "\(rawPercentageText)".starts(with: "-")
             
-            hourlyPercentageText = isNegative ? "\(rawHourlyPercentageText)%" :
-                                                "+\(rawHourlyPercentageText)%"
+            percentageText = isNegative ? "\(rawPercentageText)%" :
+                                                "+\(rawPercentageText)%"
             
         } else {
-            hourlyPercentageText = "0.00"
+            percentageText = "0.00"
         }
         
         cell.rank.text = "\(coin.rank ?? 0)"
         cell.symbol.text = coin.symbol ?? "N/A"
         cell.name.text = coin.name ?? "N/A"
-        cell.priceUSD.text =  "$\(coin.priceUSD ?? 0)"
-        cell.hourlyPercentChange.text = hourlyPercentageText
-        cell.hourlyPercentChange.textColor = isNegative ? UIColor.red : UIColor.flatGreenColorDark()
+        
+        cell.coinPrice.text = priceSegmentedControl.selectedSegmentIndex == 0 ? "$\(coin.priceUSD ?? 0)" : "$\(coin.priceBTC ?? 0)"
+        
+        cell.percentChange.text = percentageText
+        cell.percentChange.textColor = isNegative ? UIColor.red : UIColor.flatGreenColorDark()
         return cell
     }
 }

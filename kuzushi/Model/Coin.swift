@@ -16,8 +16,8 @@ struct Coin {
     var priceUSD: Double?
     var priceBTC: Double?
     var hourlyPercentChange: Double?
-    //var dailyPercentChange: Double?
-//    var weeklyPercentChange: Double?
-//    var lastUpdated: String? // Date?
+    
+    var dailyPercentChange: Double?
+    var weeklyPercentChange: Double?
 
 }

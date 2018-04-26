@@ -13,8 +13,8 @@ class CoinCell: UITableViewCell {
     let rank = UILabel()
     let symbol = UILabel()
     let name = UILabel()
-    let priceUSD = UILabel()
-    let hourlyPercentChange = UILabel()
+    let coinPrice = UILabel()
+    let percentChange = UILabel()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,20 +52,20 @@ class CoinCell: UITableViewCell {
         name.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5).isActive = true
         name.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.37).isActive = true
         
-        contentView.addSubview(priceUSD)
-        priceUSD.font = UIFont(name: Avenir.normal.rawValue, size: 18)
-        priceUSD.translatesAutoresizingMaskIntoConstraints = false
-        priceUSD.adjustsFontSizeToFitWidth = true
-        priceUSD.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
-        priceUSD.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
-        priceUSD.leadingAnchor.constraint(greaterThanOrEqualTo: name.trailingAnchor).isActive = true
+        contentView.addSubview(coinPrice)
+        coinPrice.font = UIFont(name: Avenir.normal.rawValue, size: 18)
+        coinPrice.translatesAutoresizingMaskIntoConstraints = false
+        coinPrice.adjustsFontSizeToFitWidth = true
+        coinPrice.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
+        coinPrice.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        coinPrice.leadingAnchor.constraint(greaterThanOrEqualTo: name.trailingAnchor).isActive = true
         
-        contentView.addSubview(hourlyPercentChange)
-        hourlyPercentChange.font = UIFont(name: Avenir.normal.rawValue, size: 18)
-        hourlyPercentChange.translatesAutoresizingMaskIntoConstraints = false
-        hourlyPercentChange.adjustsFontSizeToFitWidth = true
-        hourlyPercentChange.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
-        hourlyPercentChange.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        contentView.addSubview(percentChange)
+        percentChange.font = UIFont(name: Avenir.normal.rawValue, size: 18)
+        percentChange.translatesAutoresizingMaskIntoConstraints = false
+        percentChange.adjustsFontSizeToFitWidth = true
+        percentChange.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
+        percentChange.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
         
     }
     
