@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16614D2220926FA200B6892C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 16614D2120926FA200B6892C /* GoogleService-Info.plist */; };
 		16688D83204F5B19006523D8 /* CoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16688D82204F5B19006523D8 /* CoinCell.swift */; };
 		166F08B2205DAC4E00C35F31 /* Avenir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166F08B1205DAC4E00C35F31 /* Avenir.swift */; };
 		16CCC3EF204E069F0027A49E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCC3EE204E069F0027A49E /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		16614D2120926FA200B6892C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		16688D82204F5B19006523D8 /* CoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoinCell.swift; path = kuzushi/View/CoinCell.swift; sourceTree = SOURCE_ROOT; };
 		166F08B1205DAC4E00C35F31 /* Avenir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Avenir.swift; sourceTree = "<group>"; };
 		16CCC3EB204E069F0027A49E /* kuzushi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kuzushi.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +79,7 @@
 				16CCC3F5204E069F0027A49E /* Assets.xcassets */,
 				16CCC3F7204E069F0027A49E /* LaunchScreen.storyboard */,
 				16CCC3FA204E069F0027A49E /* Info.plist */,
+				16614D2120926FA200B6892C /* GoogleService-Info.plist */,
 			);
 			path = kuzushi;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				16CCC3F9204E069F0027A49E /* LaunchScreen.storyboard in Resources */,
 				16CCC3F6204E069F0027A49E /* Assets.xcassets in Resources */,
 				16CCC3F4204E069F0027A49E /* Main.storyboard in Resources */,
+				16614D2220926FA200B6892C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +409,7 @@
 			baseConfigurationReference = B08894654521EBD3B9F0E069 /* Pods-kuzushi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6F6J9E4SZ2;
 				INFOPLIST_FILE = kuzushi/Info.plist;
@@ -422,6 +427,7 @@
 			baseConfigurationReference = B2DEBB0A891D662F54A65291 /* Pods-kuzushi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6F6J9E4SZ2;
 				INFOPLIST_FILE = kuzushi/Info.plist;

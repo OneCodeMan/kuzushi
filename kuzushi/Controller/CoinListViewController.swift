@@ -8,8 +8,11 @@
 
 import UIKit
 import ChameleonFramework
+import GoogleMobileAds
 
-class CoinListViewController: UIViewController {
+class CoinListViewController: UIViewController, GADBannerViewDelegate {
+    
+    var bannerView: GADBannerView!
     
     var coins = [Coin]()
     var filteredCoins = [Coin]()
@@ -120,8 +123,9 @@ class CoinListViewController: UIViewController {
         pct.addTarget(self, action: #selector(handleSegmentIndexChange), for: .valueChanged)
         pct.insertSegment(withTitle: "Hourly", at: 0, animated: true)
         pct.insertSegment(withTitle: "Daily", at: 1, animated: true)
-        pct.insertSegment(withTitle: "Weekly", at: 1, animated: true)
+        pct.insertSegment(withTitle: "Weekly", at: 2, animated: true)
         pct.selectedSegmentIndex = 0
+        pct.layer.cornerRadius = 0.0
         return pct
     }()
     
@@ -134,6 +138,7 @@ class CoinListViewController: UIViewController {
         sgc.insertSegment(withTitle: "USD", at: 0, animated: true)
         sgc.insertSegment(withTitle: "BTC", at: 1, animated: true)
         sgc.selectedSegmentIndex = 0
+        sgc.layer.cornerRadius = 0.0
         return sgc
     }()
     
@@ -146,9 +151,33 @@ class CoinListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        bannerView.adUnitID = "ca-app-pub-8518848174079347/8710269008"
+        bannerView.rootViewController = self
+        bannerView.delegate = self
+        
+        let request = GADRequest()
+        request.testDevices = [kGADSimulatorID, "4246e160878185e04e545e079f40684b"]
+        bannerView.load(request)
+        
         setupLayout()
+        addBannerViewToView(bannerView)
         refreshData()
 
+    }
+    
+    // MARK: - AdMob Setup
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        print("adding banner to view")
+        view.addSubview(bannerView)
+        
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        bannerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        bannerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        bannerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        bannerView.topAnchor.constraint(equalTo: coinListTableView.bottomAnchor).isActive = true
+        bannerView.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     // MARK: - Setup Layout
@@ -190,21 +219,21 @@ class CoinListViewController: UIViewController {
         timeSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2).isActive = true
         timeSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -2).isActive = true
         timeSegmentedControl.topAnchor.constraint(equalTo: coinsListHeaderView.bottomAnchor).isActive = true
-        timeSegmentedControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        timeSegmentedControl.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         view.addSubview(priceSegmentedControl)
         priceSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         priceSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2).isActive = true
         priceSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -2).isActive = true
-        priceSegmentedControl.topAnchor.constraint(equalTo: timeSegmentedControl.bottomAnchor, constant: 1.5).isActive = true
-        priceSegmentedControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        priceSegmentedControl.topAnchor.constraint(equalTo: timeSegmentedControl.bottomAnchor).isActive = true
+        priceSegmentedControl.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         view.addSubview(coinListTableView)
         coinListTableView.translatesAutoresizingMaskIntoConstraints = false
         coinListTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         coinListTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        coinListTableView.topAnchor.constraint(equalTo: priceSegmentedControl.bottomAnchor).isActive = true
-        coinListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        coinListTableView.topAnchor.constraint(equalTo: priceSegmentedControl.bottomAnchor, constant: 2).isActive = true
+        //coinListTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         coinListTableView.rowHeight = 90
         
         coinListTableView.delegate = self
@@ -239,17 +268,24 @@ class CoinListViewController: UIViewController {
 
 extension CoinListViewController: UISearchBarDelegate {
     
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
+        print("Clicked")
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         view.endEditing(true)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if searchBar.text == nil || searchBar.text == "" {
+        if searchText == nil || searchText == "" {
             
             inSearchMode = false
             coinListTableView.reloadData()
             view.endEditing(true)
+            
             
         } else {
             inSearchMode = true
@@ -267,7 +303,7 @@ extension CoinListViewController: UISearchBarDelegate {
     }
 }
 
-// MARK:- UITableViewDelegate, 
+// MARK: - UITableViewDelegate, 
 
 extension CoinListViewController: UITableViewDelegate, UITableViewDataSource {
     

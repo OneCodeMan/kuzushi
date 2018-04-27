@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GoogleMobileAds
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        FirebaseApp.configure()
+        
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-8518848174079347~3550275816")
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let rootViewController = CoinListViewController()

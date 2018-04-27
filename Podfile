@@ -10,5 +10,8 @@ target 'kuzushi' do
   pod 'SwiftyJSON'
   pod 'ChameleonFramework’
   pod 'SwiftLint'
+  pod 'Google-Mobile-Ads-SDK'
+  pod 'Firebase/Core'
+  pod 'Firebase/AdMob'
 
 end
